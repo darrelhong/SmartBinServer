@@ -11,8 +11,16 @@ def hello():
     return 'Hello API'
 
 
-@api.route('/test')
-def test():
+@api.route('/bin/all')
+def all():
     data = query_db('SELECT * FROM bin')
     result = [dict(item) for item in data]
     return jsonify(result)
+
+
+@api.route('/bin/<name>')
+def get_bin(name):
+    data = query_db('SELECT * FROM bin WHERE name = ?', [name], True)
+    if data:
+        return jsonify(dict(data))
+    return 'Bin not found', 400

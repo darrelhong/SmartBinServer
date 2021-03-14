@@ -21,7 +21,7 @@ Bootstrap CSS library added with some custom overrides. Compiled from scss sourc
 
 `localhost:5000/` mockup for bin fill level
 
-`localhost:5000/api/test` returns mock data from db
+`localhost:5000/bin/all` returns mock data from db
 
 
 ## Setup
