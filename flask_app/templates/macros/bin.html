@@ -6,8 +6,8 @@
       style="height:{{fill_percent}}%"
     ></div>
   </div>
-  <p class="mb-0">{{fill_percent}}% full</p>
-  <p>Last updated: {{last_updated}}</p>
+  <p class="mb-0"><strong> {{fill_percent}}% </strong> full</p>
+  <p class="text-center"><strong>Last updated:</strong> {{last_updated.strftime("%d %B %Y, %-I:%M:%S %p")}}</p>
 
   <button class="btn btn-primary btn-sm">Refresh</button>
 </div>

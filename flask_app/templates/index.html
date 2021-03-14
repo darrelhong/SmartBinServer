@@ -8,11 +8,11 @@
 
 
 <div class="row">
-  {% for i in range(6) %}
+  {% for row in data %}
   <div class="col-sm-6 col-md-4 col-lg-3">
-   {{bin(i * 16, 'vavet', '14 Mar')}}
+    {{bin(row['fill_percent'], row['name'], row['last_updated'])}}
   </div>
-  {%endfor%}
+  {% endfor %}
 </div>
 
 {% endblock %}
