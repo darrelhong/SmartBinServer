@@ -1,0 +1,14 @@
+{% macro bin(fill_percent, name, last_updated) %}
+<div class="bin-wrapper">
+  <div class="bin">
+    <div
+      class="{{'fill-red' if fill_percent > 75 else 'fill-yellow' if fill_percent > 50 else 'fill-blue' if fill_percent > 25 else 'fill-green'}}"
+      style="height:{{fill_percent}}%"
+    ></div>
+  </div>
+  <p class="mb-0">{{fill_percent}}% full</p>
+  <p>Last updated: {{last_updated}}</p>
+
+  <button class="btn btn-primary btn-sm">Refresh</button>
+</div>
+{%endmacro %}

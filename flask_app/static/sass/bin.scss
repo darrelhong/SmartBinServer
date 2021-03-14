@@ -1,0 +1,29 @@
+.bin-wrapper {
+  display: grid;
+  justify-items: center;
+}
+
+.bin {
+  width: 100px;
+  height: 130px;
+  transform: perspective(10px) rotateX(-1deg);
+  margin: 50px 50px 30px 50px;
+  border: 5px solid black;
+  border-top: none;
+  display: grid;
+  align-items: end;
+}
+
+.fill-green {
+  background: $success;
+}
+.fill-blue {
+  background: $info;
+}
+.fill-yellow {
+  background: $warning;
+}
+.fill-red {
+  background: $danger;
+}
+
