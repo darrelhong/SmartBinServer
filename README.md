@@ -5,9 +5,9 @@ Repo to store all functionality related to web platform, including flask server,
 
 ### flask_app
 
-`app.py`
+`views.py`
 
-Main entry point. Plan is to use this for template views
+Plan is to use this for template views
 
 `api.py`
 
@@ -17,12 +17,18 @@ Plan is to use this for api endpoints, all routes prefixed with '/api'
 
 Bootstrap CSS library added with some custom overrides. Compiled from scss source files.
 
+**examples**
+
+`localhost:5000/` mockup for bin fill level
+
+`localhost:5000/api/test` returns mock data from db
+
 
 ## Setup
 
 Install Python 3
 
-Setup virtualenv if desired
+Setup virtualenv
 
 ```
 pip3 install virtualenv
@@ -39,10 +45,16 @@ pip3 install -r requirements.txt
 ```
 # windows
 set FLASK_ENV=development
+set FLASK_APP=flask_app
 OR
 # unix
 export FLASK_ENV=development
+export FLASK_APP=flask_app
 
-cd flask_app
+# initialise db
+# create instance folder to store sqlite db
+touch instance
+python3 -m flask init-db
+
 python3 -m flask run
 ```
