@@ -14,14 +14,14 @@ def hello():
     return 'Hello API'
 
 
-@api.route('/fill-level')
+@api.route('/fill-level/all')
 def all_fill_level():
     data = query_db("SELECT * FROM bin NATURAL JOIN fill_level")
     result = [dict(item) for item in data]
     return jsonify(result)
 
 
-@api.route('/latest-fill-level')
+@api.route('/fill-level/latest')
 def latest_fill_level():
     data = query_db("SELECT *, "
                     "max(time_updated) AS time_updated "
@@ -30,7 +30,7 @@ def latest_fill_level():
     return jsonify(result)
 
 
-@api.route('/fill-level/<name>')
+@api.route('/fill-level/name/<name>')
 def bin_fill_level(name):
     data = query_db(
         "SELECT * FROM bin NATURAL JOIN fill_level WHERE bin_name = ?",
@@ -40,7 +40,7 @@ def bin_fill_level(name):
     return 'Bin not found', 400
 
 
-@api.route('/latest-fill-level/<name>')
+@api.route('/fill-level/latest/<name>')
 def bin_latest_fill_level(name):
     data = query_db("SELECT * FROM bin NATURAL JOIN fill_level "
                     "WHERE bin_name = ? "
@@ -51,7 +51,7 @@ def bin_latest_fill_level(name):
     return 'Bin not found', 300
 
 
-@api.route('/bin/update', methods=['POST'])
+@api.route('/update/fill-level', methods=['POST'])
 def update_bin():
     data = request.get_json()
     current = query_db('SELECT * FROM bin WHERE name = ?',
