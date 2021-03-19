@@ -48,24 +48,21 @@ def bin_latest_fill_level(name):
                     "LIMIT 1", [name], True)
     if data:
         return jsonify(dict(data))
-    return 'Bin not found', 300
+    return 'Bin not found', 400
 
 
-@api.route('/update/fill-level', methods=['POST'])
+@api.route('/fill-level/update', methods=['POST'])
 def update_bin():
     data = request.get_json()
-    current = query_db('SELECT * FROM bin WHERE name = ?',
-                       [data['microbit_name']], True)
-
-    name = data['microbit_name']
-    fill_percent = int(data['distance'] / BIN_HEIGHT * 100)
-    cur = get_db().cursor()
+    name = data['bin_name']
+    current = query_db("SELECT * FROM bin WHERE bin_name = ?",
+                       [name], True)
     if current:
-        cur.execute('UPDATE bin SET fill_percent = ? WHERE name = ?',
+        fill_percent = int(data['distance'] / BIN_HEIGHT * 100)
+        cur = get_db().cursor()
+        cur.execute("INSERT INTO fill_level VALUES "
+                    "(?, datetime('now', 'localtime'), ?)",
                     [fill_percent, name])
-    else:
-        cur.execute('INSERT INTO bin (name, fill_percent) VALUES (?, ?)', [
-                    name, fill_percent])
-    get_db().commit()
-
-    return 'Success'
+        get_db().commit()
+        return 'Success'
+    return 'Bin not found', 400

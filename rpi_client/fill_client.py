@@ -28,14 +28,15 @@ def main():
             msg = ser.readline().decode('utf-8').strip()
 
             msg_arr = msg.split('_')
-            fill_info = {
-                'bin_name': msg_arr[0],
-                'microbit_name': msg_arr[1],
-                'distance': int(msg_arr[2])
-            }
 
-            requests.post(
-                '{}/api/bin/update'.format(args.apihost), data=fill_info)
+            if (msg_arr[1] == 'FILL'):
+                fill_info = {
+                    'bin_name': msg_arr[0],
+                    'distance': int(msg_arr[2])
+                }
+
+                requests.post(
+                    '{}/api/bin/update'.format(args.apihost), data=fill_info)
 
     except serial.SerialException as err:
         print('SerialExceptionL {}'.format(err))
