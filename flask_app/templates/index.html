@@ -8,7 +8,7 @@
 <div class="row">
   {% for row in data %}
   <div class="col-sm-6 col-md-4 col-lg-3">
-    {{bin(row['fill_percent'], row['name'], row['last_updated'])}}
+    {{bin(row['fill_percent'], row['bin_name'], row['time_updated'])}}
   </div>
   {% endfor %}
 </div>
