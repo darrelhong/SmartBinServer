@@ -35,8 +35,9 @@ def main():
                     'distance': int(msg_arr[2])
                 }
 
-                requests.post(
+                r = requests.post(
                     '{}/api/bin/update'.format(args.apihost), data=fill_info)
+                print(r.text)
 
     except serial.SerialException as err:
         print('SerialExceptionL {}'.format(err))

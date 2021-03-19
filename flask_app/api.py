@@ -58,11 +58,13 @@ def update_bin():
     current = query_db("SELECT * FROM bin WHERE bin_name = ?",
                        [name], True)
     if current:
-        fill_percent = int(data['distance'] / BIN_HEIGHT * 100)
-        cur = get_db().cursor()
-        cur.execute("INSERT INTO fill_level VALUES "
-                    "(?, datetime('now', 'localtime'), ?)",
-                    [fill_percent, name])
-        get_db().commit()
-        return 'Success'
+        if data['distance'] <= BIN_HEIGHT:
+            fill_percent = int(data['distance'] / BIN_HEIGHT * 100)
+            cur = get_db().cursor()
+            cur.execute("INSERT INTO fill_level VALUES "
+                        "(?, datetime('now', 'localtime'), ?)",
+                        [fill_percent, name])
+            get_db().commit()
+            return 'Success'
+        return 'Bin height exceeded', 400
     return 'Bin not found', 400
