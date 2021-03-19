@@ -53,7 +53,7 @@ export FLASK_APP=flask_app
 
 # initialise db
 # create instance folder to store sqlite db
-touch instance
+mkdir instance
 python3 -m flask init-db
 
 python3 -m flask run
