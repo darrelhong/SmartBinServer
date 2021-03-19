@@ -13,6 +13,8 @@ Plan is to use this for template views
 
 Plan is to use this for api endpoints, all routes prefixed with '/api'
 
+See example SQL queries here
+
 **Misc**
 
 Bootstrap CSS library added with some custom overrides. Compiled from scss source files.
@@ -20,8 +22,6 @@ Bootstrap CSS library added with some custom overrides. Compiled from scss sourc
 **examples**
 
 `localhost:5000/` mockup for bin fill level
-
-`localhost:5000/bin/all` returns mock data from db
 
 
 ## Setup
