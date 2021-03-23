@@ -1,4 +1,5 @@
 from flask import request, Blueprint, jsonify
+import sqlite3
 
 from flask_app.db import query_db, get_db
 
@@ -67,4 +68,40 @@ def update_bin():
             get_db().commit()
             return 'Success'
         return 'Bin height exceeded', 400
+    return 'Bin not found', 400
+
+
+@api.route('/spill/update', methods=['POST'])
+def update_spill():
+    data = request.get_json()
+    name = data['bin_name']
+    current = query_db("SELECT * FROM bin WHERE bin_name = ?",
+                       [name], True)
+    if current:
+        try:
+            cur = get_db().cursor()
+            cur.execute("UPDATE bin set is_spill = ? WHERE bin_name = ?",
+                        [data['spill_status'], name])
+            get_db().commit()
+            return 'Success'
+        except sqlite3.IntegrityError:
+            return 'Invalid status', 400
+    return 'Bin not found', 400
+
+
+@api.route('/tilt/update', methods=['POST'])
+def update_tilt():
+    data = request.get_json()
+    name = data['bin_name']
+    current = query_db("SELECT * FROM bin WHERE bin_name = ?",
+                       [name], True)
+    if current:
+        try:
+            cur = get_db().cursor()
+            cur.execute("UPDATE bin set is_tilt = ? WHERE bin_name = ?",
+                        [data['tilt_status'], name])
+            get_db().commit()
+            return 'Success'
+        except sqlite3.IntegrityError:
+            return 'Invalid status', 400
     return 'Bin not found', 400
