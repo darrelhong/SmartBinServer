@@ -3,7 +3,11 @@ DROP TABLE IF EXISTS fill_level;
 
 --implicit rowid
 CREATE TABLE bin (
-  bin_name TEXT PRIMARY KEY
+  bin_name TEXT PRIMARY KEY,
+  is_spill INTEGER CHECK(is_spill = 0 OR is_spill = 1),
+  is_spill_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
+  is_tilt INTEGER CHECK(is_tilt = 0 OR is_tilt = 1),
+  is_tilt_updated TIMESTAMP DEFAULT (datetime('now','localtime'))
 );
 
 --implicit rowid
@@ -11,8 +15,20 @@ CREATE TABLE fill_level (
   fill_percent INTEGER NOT NULL CHECK(fill_percent >= 0 AND fill_percent <= 100),
   time_updated TIMESTAMP DEFAULT (datetime('now','localtime')) NOT NULL,
   bin_name TEXT NOT NULL, 
-  FOREIGN KEY(bin_name) REFERENCES bin(name)
+  FOREIGN KEY(bin_name) REFERENCES bin(bin_name)
 );
+
+CREATE TRIGGER is_spill_last_updated AFTER UPDATE ON bin
+WHEN new.is_spill IS NOT NULL
+BEGIN
+UPDATE bin SET is_spill_updated = (datetime('now','localtime')) WHERE bin_name = old.bin_name;
+END;
+
+CREATE TRIGGER is_tilt_last_updated AFTER UPDATE ON bin
+WHEN new.is_tilt IS NOT NULL
+BEGIN
+UPDATE bin SET is_tilt_updated = (datetime('now','localtime')) WHERE bin_name = old.bin_name;
+END;
 
 -- old trigger not needed
 -- CREATE TRIGGER bin_last_updated BEFORE UPDATE ON bin
@@ -21,13 +37,13 @@ CREATE TABLE fill_level (
 -- END;
 
 -- Initialise mock data
-INSERT INTO bin (bin_name) 
+INSERT INTO bin (bin_name, is_spill, is_tilt) 
 VALUES
-  ('alpha'), 
-  ('bravo'),
-  ('charlie'),
-  ('delta'),
-  ('echo')
+  ('alpha', false, false), 
+  ('bravo', false, false),
+  ('charlie', false, false),
+  ('delta', false, false),
+  ('echo', false, false)
 ;
 
 INSERT INTO fill_level (bin_name, fill_percent, time_updated) 
