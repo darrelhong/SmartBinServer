@@ -9,6 +9,8 @@ views = Blueprint('views', __name__)
 def index():
 
     data = query_db("SELECT *, "
-                    "max(time_updated) AS time_updated "
-                    "FROM fill_level GROUP BY bin_name")
+                    "max(time_updated) AS 'fill_updated [timestamp]'"
+                    "FROM fill_level "
+                    "NATURAL JOIN bin "
+                    "GROUP BY bin_name")
     return render_template('index.html', data=data)

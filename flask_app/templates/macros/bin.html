@@ -1,4 +1,4 @@
-{% macro bin(fill_percent, name, last_updated) %}
+{% macro bin(fill_percent, name, fill_updated, is_spill, spill_updated, is_tilt, tilt_updated) %}
 <div class="bin-wrapper">
   <div class="bin">
     <div
@@ -6,8 +6,27 @@
       style="height:{{fill_percent}}%"
     ></div>
   </div>
+
   <h5 class="mb-3">{{name}}</h5>
   <p class="mb-0"><strong> {{fill_percent}}% </strong> full</p>
-  <p class="text-center"><strong>Last updated:</strong> {{last_updated.strftime("%A, %d %b %Y, %-I:%M:%S %p")}}</p>
+  <p class="text-center mb-1"><strong>Fill updated:</strong> {{fill_updated.strftime("%A, %d %b %Y, %-I:%M:%S %p")}}</p>
+  
+  <p class="text-center mb-1">
+    {% if is_spill %}
+    <strong>💧 Spill detected!</strong>
+    {% else %}
+      No spill detected
+    {% endif %}
+  </p>
+  <p class="text-center mb-1"><strong>Spill updated:</strong> {{spill_updated.strftime("%A, %d %b %Y, %-I:%M:%S %p")}}</p>
+
+  <p class="text-center mb-1">
+    {% if is_tilt %}
+    <strong>Tilt detected!</strong>
+    {% else %}
+      No tilt detected
+    {% endif %}
+  </p>
+  <p class="text-center mb-1"><strong>Tilt updated:</strong> {{tilt_updated.strftime("%A, %d %b %Y, %-I:%M:%S %p")}}</p>
 </div>
 {%endmacro %}
