@@ -1,0 +1,15 @@
+{% from "macros/bin.html" import bin with context %}
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col">
+    {{bin(data['fill_percent'], data['bin_name'], data['fill_updated'],
+    data['is_spill'], data['is_spill_updated'], data['is_tilt'],
+    data['is_tilt_updated'] )}}
+  </div>
+</div>
+
+{% endblock %}
