@@ -18,14 +18,14 @@ CREATE TABLE fill_level (
   FOREIGN KEY(bin_name) REFERENCES bin(bin_name)
 );
 
-CREATE TRIGGER is_spill_last_updated AFTER UPDATE ON bin
-WHEN new.is_spill IS NOT NULL
+CREATE TRIGGER is_spill_last_updated 
+AFTER UPDATE OF is_spill ON bin
 BEGIN
 UPDATE bin SET is_spill_updated = (datetime('now','localtime')) WHERE bin_name = old.bin_name;
 END;
 
-CREATE TRIGGER is_tilt_last_updated AFTER UPDATE ON bin
-WHEN new.is_tilt IS NOT NULL
+CREATE TRIGGER is_tilt_last_updated 
+AFTER UPDATE OF is_tilt ON bin
 BEGIN
 UPDATE bin SET is_tilt_updated = (datetime('now','localtime')) WHERE bin_name = old.bin_name;
 END;
