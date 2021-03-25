@@ -1,0 +1,8 @@
+{% macro bin_graphic(fill_percent) %}
+<div class="bin">
+  <div
+    class="{{'fill-red' if fill_percent > 75 else 'fill-yellow' if fill_percent > 50 else 'fill-blue' if fill_percent > 25 else 'fill-green'}}"
+    style="height:{{fill_percent}}%"
+  ></div>
+</div>
+{% endmacro %}
