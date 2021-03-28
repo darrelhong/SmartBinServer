@@ -25,3 +25,8 @@ def bin_page(name):
                     "NATURAL JOIN bin "
                     "WHERE bin_name = ?", [name], True)
     return render_template('/bin/index.html', data=data)
+
+
+@views.route('/floorplan')
+def floorplan():
+    return render_template('/floorplan.html')
