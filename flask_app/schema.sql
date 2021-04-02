@@ -39,8 +39,8 @@ END;
 -- Initialise mock data
 INSERT INTO bin (bin_name, is_spill, is_tilt) 
 VALUES
-  ('alpha', false, false), 
-  ('bravo', false, false),
+  ('alpha', true, false), 
+  ('bravo', false, true),
   ('charlie', false, false),
   ('delta', false, false),
   ('echo', false, false)
