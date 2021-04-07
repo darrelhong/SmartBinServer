@@ -1,0 +1,64 @@
+{% from "macros/bin.html" import bin with context %}
+{% from "macros/bin_graphic.html" import bin_graphic with context %}
+
+{% extends "base.html" %} 
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-6 d-flex justify-content-center mt-3">
+    {{bin_graphic(data['fill_percent'])}}
+  </div>
+  <div class="col-md-6 d-flex justify-content-center mt-3">
+    <dl class="row">
+      <dt class="col-sm-4">Bin Name</dt>
+      <dd class="col-sm-8">
+        <p><strong>{{data['bin_name']}}</strong></p>
+      </dd>
+
+      <dt class="col-sm-4">Fill percent</dt>
+      <dd class="col-sm-8">
+        <p class="mb-0"><strong>{{data['fill_percent']}}%</strong></p>
+      </dd>
+
+      <dt class="col-sm-4">Fill updated</dt>
+      <dd class="col-sm-8">
+        <p>{{data['is_spill_updated'].strftime("%d %b %Y")}}</p>
+      </dd>
+
+      <dt class="col-sm-4">Spill status</dt>
+      <dd class="col-sm-8">
+         <p class="mb-0">
+          {% if data['is_spill'] %}
+          <strong>💧 Spill detected!</strong>
+          {% else %}
+          No spill detected
+          {% endif %}
+        </p>
+      </dd>
+
+        <dt class="col-sm-4">Fill updated</dt>
+      <dd class="col-sm-8">
+        <p>{{data['is_spill_updated'].strftime("%d %b %Y")}}</p>
+      </dd>
+
+      <dt class="col-sm-4">Tilt status</dt>
+      <dd class="col-sm-8">
+         <p class="mb-0">
+          {% if data['is_tilt'] %}
+        <strong>Tilt detected!</strong>
+        {% else %}
+        No tilt detected
+        {% endif %}
+        </p>
+      </dd>
+
+      <dt class="col-sm-4">Tilt updated</dt>
+      <dd class="col-sm-8">
+        <p>{{data['is_tilt_updated'].strftime("%A, %d %b %Y, %I:%M:%S %p")}}</p>
+      </dd>
+    </dl>
+  </div>
+</div>
+
+{% endblock %}

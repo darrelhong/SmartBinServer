@@ -1,0 +1,29 @@
+{% from "macros/bin_graphic.html" import bin_graphic with context %}
+
+{% macro bin(fill_percent, name, fill_updated, is_spill, spill_updated, is_tilt, tilt_updated) %}
+<a href="{{url_for('views.bin_page', name=name)}}" class="text-decoration-none text-dark">
+  <div class="bin-wrapper">
+    {{bin_graphic(fill_percent)}}
+    
+    <h5 class="mb-3">{{name}}</h5>
+    <p class="mb-1"><strong> {{fill_percent}}% </strong> full</p>
+    
+    <p class="text-center mb-1">
+      {% if is_spill %}
+      <strong>💧 Spill detected!</strong>
+      {% else %}
+      No spill detected
+      {% endif %}
+    </p>
+    
+    <p class="text-center mb-1">
+      {% if is_tilt %}
+      <strong>Tilt detected!</strong>
+      {% else %}
+      No tilt detected
+      {% endif %}
+    </p>
+    <span class="bin-arrow">➜</span>
+  </div>
+</a>
+{%endmacro %}

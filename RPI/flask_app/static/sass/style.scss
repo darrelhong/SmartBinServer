@@ -1,0 +1,9 @@
+@import "./overrides";
+
+@import "./bootstrap/scss/bootstrap";
+
+@import "./bin";
+
+.svg-bin:hover {
+  filter: hue-rotate(45deg);
+}

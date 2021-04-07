@@ -1,0 +1,135 @@
+{% from "macros/bin.html" import bin with context %} {% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+  <?xml version="1.0" encoding="utf-8"?>
+  <svg viewBox="0 0 500 350" xmlns="http://www.w3.org/2000/svg">
+    <rect
+      x="18.692"
+      y="31.376"
+      width="458.611"
+      height="277.036"
+      style="fill: none; stroke: rgb(0, 0, 0); stroke-width: 2px"
+    />
+    <rect
+      x="18.024"
+      y="196.633"
+      width="124.833"
+      height="111.482"
+      style="fill: none; stroke: rgb(0, 0, 0)"
+    />
+    <rect
+      x="18.024"
+      y="196.633"
+      width="124.833"
+      height="111.482"
+      style="fill: none; stroke: rgb(0, 0, 0)"
+    />
+    <rect
+      x="142.857"
+      y="196.633"
+      width="124.833"
+      height="111.482"
+      style="fill: none; stroke: rgb(0, 0, 0)"
+    />
+    <rect
+      x="351.802"
+      y="196.298"
+      width="124.833"
+      height="111.482"
+      style="fill: none; stroke: rgb(0, 0, 0)"
+    />
+    <rect
+      x="19.359"
+      y="31.079"
+      width="241.655"
+      height="97.463"
+      style="fill: none; stroke: rgb(0, 0, 0)"
+    />
+    <rect
+      x="-400.534"
+      y="31.079"
+      width="139.52"
+      height="97.463"
+      style="fill: none; stroke: rgb(0, 0, 0)"
+      transform="matrix(-1, 0, 0, 1, 0, 0)"
+    />
+
+    <!-- bins -->
+    <a href="/bin/alpha">
+      <rect
+        class="svg-bin"
+        x="24.032"
+        y="37.309"
+        width="21.362"
+        height="19.359"
+        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
+      />
+    </a>
+    <a href="/bin/bravo">
+      <rect
+        class="svg-bin"
+        x="266.355"
+        y="37.977"
+        width="21.362"
+        height="19.359"
+        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
+      />
+    </a>
+    <a href="/bin/charlie">
+      <rect
+        class="svg-bin"
+        x="451.268"
+        y="35.307"
+        width="21.362"
+        height="19.359"
+        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
+      />
+    </a>
+    <a href="/bin/delta">
+      <rect
+        class="svg-bin"
+        x="27.37"
+        y="282.302"
+        width="21.362"
+        height="19.359"
+        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
+      />
+    </a>
+    <a href="/bin/echo">
+      <rect
+        class="svg-bin"
+        x="147.529"
+        y="281.636"
+        width="21.362"
+        height="19.359"
+        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
+      />
+    </a>
+    <a href="/bin/alpha">
+      <rect
+        class="svg-bin"
+        x="272.362"
+        y="282.303"
+        width="21.362"
+        height="19.359"
+        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
+      />
+    </a>
+    <a href="/bin/bravo">
+      <rect
+        class="svg-bin"
+        x="449.265"
+        y="282.971"
+        width="21.362"
+        height="19.359"
+        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
+      />
+    </a>
+  </svg>
+</div>
+
+<script>
+  document.getElementById("floorplan-nav-anchor").classList.add("active");
+</script>
+{% endblock %}
