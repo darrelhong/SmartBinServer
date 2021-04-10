@@ -1,7 +1,7 @@
 {% from "macros/bin.html" import bin with context %}
 {% from "macros/bin_graphic.html" import bin_graphic with context %}
 
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
 {% block content %}
 
@@ -28,7 +28,7 @@
 
       <dt class="col-sm-4">Spill status</dt>
       <dd class="col-sm-8">
-         <p class="mb-0">
+        <p class="mb-0">
           {% if data['is_spill'] %}
           <strong>💧 Spill detected!</strong>
           {% else %}
@@ -37,19 +37,19 @@
         </p>
       </dd>
 
-        <dt class="col-sm-4">Spill updated</dt>
+      <dt class="col-sm-4">Spill updated</dt>
       <dd class="col-sm-8">
         <p>{{data['is_spill_updated'].strftime("%A, %d %b %Y, %I:%M:%S %p")}}</p>
       </dd>
 
       <dt class="col-sm-4">Tilt status</dt>
       <dd class="col-sm-8">
-         <p class="mb-0">
+        <p class="mb-0">
           {% if data['is_tilt'] %}
-        <strong>Tilt detected!</strong>
-        {% else %}
-        No tilt detected
-        {% endif %}
+          <strong>Tilt detected!</strong>
+          {% else %}
+          No tilt detected
+          {% endif %}
         </p>
       </dd>
 
@@ -58,6 +58,13 @@
         <p>{{data['is_tilt_updated'].strftime("%A, %d %b %Y, %I:%M:%S %p")}}</p>
       </dd>
     </dl>
+  </div>
+</div>
+
+<div class="row mt-4 justify-content-center">
+  <h5 class="text-center mb-0">Fill chart</h5>
+  <div class="col col-auto">
+    <img src="{{url_for('views.fill_chart', name=bin_name)}}" alt="fill level chart" width="640" />
   </div>
 </div>
 
