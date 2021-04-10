@@ -7,34 +7,36 @@ from matplotlib.figure import Figure
 from matplotlib.dates import DateFormatter, MinuteLocator
 from matplotlib.backends.backend_svg import FigureCanvasSVG
 
-views = Blueprint('views', __name__)
-
-@views.route('/')
+views = Blueprint("views", __name__)
+@views.route("/")
 def index():
 
-    data = query_db("SELECT *, "
-                    "max(time_updated) AS 'fill_updated [timestamp]'"
-                    "FROM fill_level "
-                    "NATURAL JOIN bin "
-                    "GROUP BY bin_name")
-    return render_template('index.html', data=data)
+    data = query_db(
+        "SELECT *, "
+        "max(time_updated) AS 'fill_updated [timestamp]'"
+        "FROM fill_level "
+        "NATURAL JOIN bin "
+        "GROUP BY bin_name"
+    )
+    return render_template("index.html", data=data)
 
-
-@views.route('/bin/<name>')
+@views.route("/bin/<name>")
 def bin_page(name):
 
-    data = query_db("SELECT *, "
-                    "max(time_updated) AS 'fill_updated [timestamp]'"
-                    "FROM fill_level "
-                    "NATURAL JOIN bin "
-                    "WHERE bin_name = ?", [name], True)
-    return render_template('/bin/index.html', data=data, bin_name=name)
+    data = query_db(
+        "SELECT *, "
+        "max(time_updated) AS 'fill_updated [timestamp]'"
+        "FROM fill_level "
+        "NATURAL JOIN bin "
+        "WHERE bin_name = ?",
+        [name],
+        True,
+    )
+    return render_template("/bin/index.html", data=data, bin_name=name)
 
-
-@views.route('/floorplan')
+@views.route("/floorplan")
 def floorplan():
-    return render_template('/floorplan.html')
-
+    return render_template("/floorplan.html")
 
 @views.route("/fill-chart/<name>")
 def fill_chart(name):
@@ -50,14 +52,14 @@ def fill_chart(name):
     ax = fig.add_subplot(1, 1, 1)
 
     # hide top and right axis
-    ax.spines['right'].set_visible(False)
-    ax.spines['top'].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
     # HACKY WARNING show date as chart tiile
     ax.set_title(data[0]["time_updated"].strftime("%A, %d %b %Y"), fontsize="medium")
 
     ax.set_ylabel("Fiil percent")
     ax.set_ylim([0, 100])
-    
+
     # x axis interval and format
     ax.xaxis.set_major_locator(MinuteLocator(interval=1))
     ax.xaxis.set_major_formatter(DateFormatter("%I:%M:%S %P"))
