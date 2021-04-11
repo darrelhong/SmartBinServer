@@ -10,7 +10,6 @@ import os
 
 from datetime import datetime
 
-from Adafruit_BME280 import *
 from gpiozero import MCP3008
 from gpiozero import PWMLED
 
@@ -72,14 +71,16 @@ def takePicture():
     # take camera and return a value
     # return a success or fail reply.
     print("Camera module called.")
+    time.sleep(13)
+    sendCommand("cmd:" + deviceName + "_BDOOR_1")
 
 try:
 
     host = socket.gethostname()
     port = 9999
 
-    s = socket.socket()
-    s.connect((host, port))
+    #s = socket.socket()
+    #s.connect((host, port))
 
     #message = "INIT_RPI_SENSOR"
 
