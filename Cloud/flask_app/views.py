@@ -4,10 +4,12 @@ from flask_app.db import query_db
 
 from io import BytesIO
 from matplotlib.figure import Figure
-from matplotlib.dates import DateFormatter, MinuteLocator
+from matplotlib.dates import ConciseDateFormatter, AutoDateLocator
 from matplotlib.backends.backend_svg import FigureCanvasSVG
 
 views = Blueprint("views", __name__)
+
+
 @views.route("/")
 def index():
 
@@ -19,6 +21,7 @@ def index():
         "GROUP BY bin_name"
     )
     return render_template("index.html", data=data)
+
 
 @views.route("/bin/<name>")
 def bin_page(name):
@@ -34,9 +37,11 @@ def bin_page(name):
     )
     return render_template("/bin/index.html", data=data, bin_name=name)
 
+
 @views.route("/floorplan")
 def floorplan():
     return render_template("/floorplan.html")
+
 
 @views.route("/fill-chart/<name>")
 def fill_chart(name):
@@ -55,14 +60,15 @@ def fill_chart(name):
     ax.spines["right"].set_visible(False)
     ax.spines["top"].set_visible(False)
     # HACKY WARNING show date as chart tiile
-    ax.set_title(data[0]["time_updated"].strftime("%A, %d %b %Y"), fontsize="medium")
+    # ax.set_title(data[0]["time_updated"].strftime("%A, %d %b %Y"), fontsize="medium")
 
     ax.set_ylabel("Fiil percent")
     ax.set_ylim([0, 100])
 
     # x axis interval and format
-    ax.xaxis.set_major_locator(MinuteLocator(interval=1))
-    ax.xaxis.set_major_formatter(DateFormatter("%I:%M:%S %P"))
+    locator = AutoDateLocator()
+    ax.xaxis.set_major_locator(locator)
+    ax.xaxis.set_major_formatter(ConciseDateFormatter(locator))
     fig.autofmt_xdate()
 
     # plot data
