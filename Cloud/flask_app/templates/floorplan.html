@@ -1,4 +1,7 @@
-{% from "macros/bin.html" import bin with context %} {% extends "base.html" %}
+{% from "macros/bin_graphic_fp.html" import bin_graphic_fp with context %}
+
+{% extends "base.html" %}
+
 {% block content %}
 
 <div class="row">
@@ -56,76 +59,26 @@
     />
 
     <!-- bins -->
-    <a href="/bin/alpha">
-      <rect
-        class="svg-bin"
-        x="24.032"
-        y="37.309"
-        width="21.362"
-        height="19.359"
-        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
-      />
-    </a>
-    <a href="/bin/bravo">
-      <rect
-        class="svg-bin"
-        x="266.355"
-        y="37.977"
-        width="21.362"
-        height="19.359"
-        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
-      />
-    </a>
-    <a href="/bin/charlie">
-      <rect
-        class="svg-bin"
-        x="451.268"
-        y="35.307"
-        width="21.362"
-        height="19.359"
-        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
-      />
-    </a>
-    <a href="/bin/delta">
-      <rect
-        class="svg-bin"
-        x="27.37"
-        y="282.302"
-        width="21.362"
-        height="19.359"
-        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
-      />
-    </a>
-    <a href="/bin/echo">
-      <rect
-        class="svg-bin"
-        x="147.529"
-        y="281.636"
-        width="21.362"
-        height="19.359"
-        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
-      />
-    </a>
-    <a href="/bin/alpha">
-      <rect
-        class="svg-bin"
-        x="272.362"
-        y="282.303"
-        width="21.362"
-        height="19.359"
-        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
-      />
-    </a>
-    <a href="/bin/bravo">
-      <rect
-        class="svg-bin"
-        x="449.265"
-        y="282.971"
-        width="21.362"
-        height="19.359"
-        style="stroke: rgb(85, 125, 218); fill: rgb(109, 249, 49)"
-      />
-    </a>
+    {{bin_graphic_fp("/bin/alpha", 24.032, 37.309, data["alpha"])}}
+    <text style="transform: translate(48px, 52px);font-size: 12px">{{data["alpha"]}}%</text>
+    
+    {{bin_graphic_fp("/bin/bravo", 266.355, 37.977, data["bravo"])}}
+    <text style="transform: translate(291px, 52px);font-size: 12px;">{{data["bravo"]}}%</text>
+
+    {{bin_graphic_fp("/bin/charlie", 451.268, 35.307, data["charlie"])}}
+    <text style="transform: translate(425px, 50px);font-size: 12px;">{{data["charlie"]}}%</text>
+
+    {{bin_graphic_fp("/bin/delta", 27.37, 282.302, data["delta"])}}
+    <text style="transform: translate(51px, 296px);font-size: 12px;">{{data["delta"]}}%</text>
+
+    {{bin_graphic_fp("/bin/delta", 147.529, 281.636, data["echo"])}}
+    <text style="transform: translate(172px, 296px);font-size: 12px;">{{data["echo"]}}%</text>
+
+    {{bin_graphic_fp("/bin/alpha", 272.362, 282.303, data["alpha"])}}
+    <text style="transform: translate(296px, 297px);font-size: 12px;">{{data["alpha"]}}%</text>
+
+    {{bin_graphic_fp("/bin/bravo", 449.265, 282.971, data["bravo"])}}
+    <text style="transform: translate(423px, 298px);font-size: 12px;">{{data["bravo"]}}%</text>
   </svg>
 </div>
 

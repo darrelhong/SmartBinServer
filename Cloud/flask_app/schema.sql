@@ -72,7 +72,7 @@ VALUES
   ('bravo', 46, datetime('now', '-4 hours', 'localtime')),
   ('bravo', 51, datetime('now', '-3 hours', 'localtime')),
   ('bravo', 62, datetime('now', '-2 hours', 'localtime')),
-  ('bravo', 71, datetime('now', '-1 hours', 'localtime')),
+  ('bravo', 92, datetime('now', '-1 hours', 'localtime')),
 
   ('charlie', 32, datetime('now', '-12 days', 'localtime')),
   ('charlie', 34, datetime('now', '-11 days', 'localtime')),
@@ -98,7 +98,7 @@ VALUES
   ('delta', 12, datetime('now', '-4 minutes', 'localtime')),
   ('delta', 19, datetime('now', '-3 minutes', 'localtime')),
   ('delta', 27, datetime('now', '-2 minutes', 'localtime')),
-  ('delta', 39, datetime('now', '-1 minutes', 'localtime')),
+  ('delta', 76, datetime('now', '-1 minutes', 'localtime')),
 
   ('echo', 22, datetime('now', '-12 minutes', 'localtime')),
   ('echo', 24, datetime('now', '-11 minutes', 'localtime')),

@@ -1,0 +1,12 @@
+{% macro bin_graphic_fp(href, x, y, fill_percent) %}
+<a href="{{href}}">
+    <rect
+      class="svg-bin {{'fill-red' if fill_percent > 90 else 'fill-orange' if fill_percent > 75 else 'fill-yellow' if fill_percent > 50 else 'fill-blue' if fill_percent > 25 else 'fill-green'}}"
+      x="{{x}}"
+      y="{{y}}"
+      width="21.362"
+      height="19.359"
+      style="stroke: rgb(85, 125, 218);"
+    />
+  </a>
+{% endmacro %}

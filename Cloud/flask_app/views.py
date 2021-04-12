@@ -40,7 +40,14 @@ def bin_page(name):
 
 @views.route("/floorplan")
 def floorplan():
-    return render_template("/floorplan.html")
+    data = query_db(
+        "SELECT *, "
+        "max(time_updated) AS time_updated "
+        "FROM fill_level GROUP BY bin_name"
+    )
+    data = {x["bin_name"]: x["fill_percent"] for x in data}
+
+    return render_template("/floorplan.html", data=data)
 
 
 @views.route("/fill-chart/<name>")
