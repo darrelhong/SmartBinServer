@@ -75,6 +75,7 @@ def takePicture():
     #return true
     sendCommand("cmd:" + deviceName + "_BDOOR_1")
     print("sending return msg from thread")
+
 try:
 
     host = socket.gethostname()
