@@ -7,6 +7,7 @@ import paho.mqtt.client as mqtt
 import random
 import _thread as thread
 import os
+from waste_classifier.waste_classifier import WasteClassifier
 
 from datetime import datetime
 
@@ -17,7 +18,14 @@ from gpiozero import PWMLED
 import config
 
 deviceName = config.BIN_NAME
+cameraOn = False
+ULTRASONIC_FRONT_EMPTY = 39
+ULTRASONIC_FRONT_FULL = 21
 
+ULTRASONIC_BACK_EMPTY = 25
+ULTRASONIC_BACK_FULL = 15
+
+FILL_TRESHOLD = (ULTRASONIC_FRONT_EMPTY - ULTRASONIC_FRONT_FULL) + (ULTRASONIC_BACK_EMPTY - ULTRASONIC_BACK_FULL)
 # periodically call central to request for info.
 
 def sendCommand(command):
@@ -45,8 +53,38 @@ def on_connect(client, userdata, flags, rc):
 
 def saveToDB2():
     #place holder
-    print("Placeholder for db data.")
-
+    #print("Placeholder for db data.")
+    c = conn.cursor()
+    for sensorValue in listSensorValues:
+        data = sensorValue.split("_")
+        incomingDeviceName = data[0]
+        if (incomingDeviceName == deviceName):
+            sensorName = data[1]
+            if (sensorName == "FILL"):
+                # fill level has level data[2] and data[3]
+                fillFront = int(data[2])
+                fillBack = int(data[3])
+                
+                percentage = round(((((ULTRASONIC_FRONT_EMPTY - fillFront) + (ULTRASONIC_BACK_EMPTY - fillBack))/FILL_TRESHOLD) * 100),2)
+                sql = "INSERT INTO fill_level(fill_percent, bin_name) VALUES(" + str(percentage) + ",'ALPHA');"
+                #print("fill.")
+                
+                
+            elif (sensorName == "TILT"):
+                #print("tilted")
+                hasTilt = data[2]
+                sql = "UPDATE bin SET is_tilt = " + hasTilt + " WHERE bin_name = 'ALPHA'"
+                #print(sql)
+                
+            elif (sensorName == "WATER"):
+                #print("water")
+                hasSpill = data[2]
+                sql = "UPDATE bin SET is_spill = " + hasSpill + " WHERE bin_name = 'ALPHA'"
+                #print(sql)
+            
+            c.execute(sql)
+            conn.commit()
+            
 def saveToDB():
     c = conn.cursor()
     for sensorValue in listSensorValues:
@@ -70,11 +108,22 @@ def takePicture():
     # threaded message
     # take camera and return a value
     # return a success or fail reply.
-    print("Camera module called.")
-    time.sleep(13)
+    global cameraOn
+    if (cameraOn == False):
+        cameraOn = True
+        time.sleep(5)
+        print("****  ITEM DETECTED... CAMERA MODULE CALLED ****.")
+        wc = WasteClassifier("waste_classifier/model")
+        result = wc.classify()
+    
+        print("**** WASTE CLASSIFIER RESULT: " + result + " ****")
+    
+    #time.sleep(13)
     #return true
-    sendCommand("cmd:" + deviceName + "_BDOOR_1")
-    print("sending return msg from thread")
+        sendCommand("cmd:" + deviceName + "_BDOOR_1")
+        cameraOn = False
+    else :
+        print("Camera is ongoing please wait...")
 
 try:
 
@@ -87,8 +136,8 @@ try:
     #message = "INIT_RPI_SENSOR"
 
     #RPI.. either ACM0 or ACM01
-    print("Listening on /dev/ttyACM2... Press CTRL+C to exit")	
-    ser = serial.Serial(port='/dev/ttyACM2', baudrate=115200, timeout=1)
+    print("Listening on /dev/ttyACM1... Press CTRL+C to exit")	
+    ser = serial.Serial(port='/dev/ttyACM1', baudrate=115200, timeout=1)
     print("Device Name: " + deviceName)
     
     #Win10
@@ -134,10 +183,9 @@ try:
                     while strSensorValues == None or len(strSensorValues) <= 0:
                         
                         incomingData = waitResponse()
-                        print("****"+ incomingData)
+                        #print("****"+ incomingData)
                         if (incomingData.startswith(deviceName + "_TDOOR")):
                             #Start new thread.
-                            print("test")
                             thread.start_new_thread(takePicture, ())
 
                         else :     
@@ -147,7 +195,7 @@ try:
                     
                     listSensorValues = strSensorValues.split(',')
         
-                    print("Before going to db2.. " + str(listSensorValues))
+                    #print("Before going to db2.. " + str(listSensorValues))
                     #saveToDB()
                     saveToDB2()
                 time.sleep(0.1)

@@ -18,23 +18,27 @@ class WasteClassifier:
 
     def led_select(self, label):
         print(label)
-        if label == "general":
+        # Paper, Tissue, Metal can, No item
+        if label == "Tissue":
             print("General trash detected")
             green_led.on()
             sleep(5)
-        if label == "recyclable":
+        elif label == "Paper" or label == "Metal can":
             print("Recyclable item detected")
             blue_led.on()
             sleep(5)
-        if label == "noitem":
+        elif label == "No item":
             print("No item detected!")
             sleep(5)
         else:
-            print("None")
-            blue_led.off()
-            green_led.off()
-            white_led.off()
+            label = "None"
+            print("Unable to detect waste properly. Please try again.")
 
+        
+        blue_led.off()
+        green_led.off()
+        white_led.off()
+        return label
     def classify(self) -> None:
         # take picture
         # Quickly blink status light
@@ -63,4 +67,5 @@ class WasteClassifier:
         for label, confidence in result.labels:
             print(f"{label}: {confidence*100}%")
 
-        self.led_select(result.prediction)
+        return self.led_select(result.prediction)
+        

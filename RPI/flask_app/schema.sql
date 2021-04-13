@@ -39,24 +39,12 @@ END;
 -- Initialise mock data
 INSERT INTO bin (bin_name, is_spill, is_tilt) 
 VALUES
-  ('alpha', false, false)
+  ('ALPHA', false, false)
 ;
 
 INSERT INTO fill_level (bin_name, fill_percent, time_updated) 
 VALUES
-  ('alpha', 5, datetime('now', '-3 hours', 'localtime')),
-  ('alpha', 10, datetime('now', '-2 hours', 'localtime')),
-  ('alpha', 15, datetime('now', '-1 hours', 'localtime')),
-  ('bravo', 20, datetime('now', '-30 minutes', 'localtime')),
-  ('bravo', 25, datetime('now', '-25 minutes', 'localtime')),
-  ('bravo', 30, datetime('now', '-20 minutes', 'localtime')),
-  ('charlie', 35, datetime('now', '-45 minutes', 'localtime')),
-  ('charlie', 40, datetime('now', '-40 minutes', 'localtime')),
-  ('charlie', 45, datetime('now', '-35 minutes', 'localtime')),
-  ('delta', 50, datetime('now', '-15 minutes', 'localtime')),
-  ('delta', 55, datetime('now', '-10 minutes', 'localtime')),
-  ('delta', 60, datetime('now', '-5 minutes', 'localtime')),
-  ('echo', 75, datetime('now', '-30 seconds', 'localtime')),
-  ('echo', 80, datetime('now', '-20 seconds', 'localtime')),
-  ('echo', 85, datetime('now', '-10 seconds', 'localtime'))
+  ('ALPHA', 5, datetime('now', '-3 hours', 'localtime')),
+  ('ALPHA', 10, datetime('now', '-2 hours', 'localtime')),
+  ('ALPHA', 15, datetime('now', '-1 hours', 'localtime'))
 ;
