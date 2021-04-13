@@ -10,7 +10,6 @@ import os
 
 from datetime import datetime
 
-from Adafruit_BME280 import *
 from gpiozero import MCP3008
 from gpiozero import PWMLED
 
@@ -72,21 +71,25 @@ def takePicture():
     # take camera and return a value
     # return a success or fail reply.
     print("Camera module called.")
-
+    time.sleep(13)
+    #return true
+    sendCommand("cmd:" + deviceName + "_BDOOR_1")
+    print("sending return msg from thread")
 try:
 
     host = socket.gethostname()
     port = 9999
 
-    s = socket.socket()
-    s.connect((host, port))
+    #s = socket.socket()
+    #s.connect((host, port))
 
     #message = "INIT_RPI_SENSOR"
 
     #RPI.. either ACM0 or ACM01
-    print("Listening on /dev/ttyACM0... Press CTRL+C to exit")	
-    ser = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=1)
-	
+    print("Listening on /dev/ttyACM2... Press CTRL+C to exit")	
+    ser = serial.Serial(port='/dev/ttyACM2', baudrate=115200, timeout=1)
+    print("Device Name: " + deviceName)
+    
     #Win10
     #print("Listening on COM7.. Press CTRL + C to exit program")
     #ser = serial.Serial(port='COM7', baudrate=115200, timeout=1)
@@ -119,18 +122,19 @@ try:
 			
             while True:
 				
-                commandToTx = "sensor_" + deviceName
+                commandToTx = "SENSOR_" + deviceName
                 sendCommand('cmd:' + commandToTx)
-                print('Finished sending command to all micro:bit devices...')
+                print('Finished sending command [cmd:' + commandToTx + '] to all micro:bit devices...')
                 
-                if commandToTx.startswith('sensor_'):
+                if commandToTx.startswith('SENSOR_'):
                 
                     strSensorValues = ''
                     
                     while strSensorValues == None or len(strSensorValues) <= 0:
                         
                         incomingData = waitResponse()
-                        if (incomingData == 'TDOOR'):
+                        print("****"+ incomingData)
+                        if (incomingData.startswith(deviceName + "_TDOOR")):
                             #Start new thread.
                             print("test")
                             thread.start_new_thread(takePicture, ())
@@ -142,7 +146,7 @@ try:
                     
                     listSensorValues = strSensorValues.split(',')
         
-                    
+                    print("Before going to db2.. " + str(listSensorValues))
                     #saveToDB()
                     saveToDB2()
                 time.sleep(0.1)

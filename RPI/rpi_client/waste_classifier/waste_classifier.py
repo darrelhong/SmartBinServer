@@ -16,7 +16,7 @@ class WasteClassifier:
         pass
         self.model = ImageModel.load(modelPath)
 
-    def led_select(label):
+    def led_select(self, label):
         print(label)
         if label == "general":
             print("General trash detected")
@@ -42,7 +42,7 @@ class WasteClassifier:
         sleep(2)
         white_led.on()
         # Start the camera preview
-        camera.start_preview(fullscreen=False, window=(50, 0, 900, 1200))
+        camera.start_preview(fullscreen=False, window=(100, -200, 900, 1200))
         # wait 2s or more for light adjustment
         sleep(3)
         # Optional image rotation for camera
