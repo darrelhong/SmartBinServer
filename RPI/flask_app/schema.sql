@@ -7,14 +7,17 @@ CREATE TABLE bin (
   is_spill INTEGER CHECK(is_spill = 0 OR is_spill = 1),
   is_spill_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
   is_tilt INTEGER CHECK(is_tilt = 0 OR is_tilt = 1),
-  is_tilt_updated TIMESTAMP DEFAULT (datetime('now','localtime'))
+  is_tilt_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
+  xCordinate INTEGER DEFAULT 15,
+  yCordinate INTEGER DEFAULT 7
 );
 
 --implicit rowid
 CREATE TABLE fill_level (
   fill_percent INTEGER NOT NULL CHECK(fill_percent >= 0 AND fill_percent <= 100),
   time_updated TIMESTAMP DEFAULT (datetime('now','localtime')) NOT NULL,
-  bin_name TEXT NOT NULL, 
+  bin_name TEXT NOT NULL,
+  tocloud BOOLEAN DEFAULT 0 NOT NULL, 
   FOREIGN KEY(bin_name) REFERENCES bin(bin_name)
 );
 
