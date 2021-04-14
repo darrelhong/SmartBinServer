@@ -51,6 +51,35 @@ def on_connect(client, userdata, flags, rc):
 	
 		print('Failed to connect, return code {:d}'.format(rc))
 
+def checkNearestBin():
+    
+	broker = 'broker.emqx.io'
+	port = 1883
+	topic = "/IS4151/SmartBin/Broker"
+	username = 'emqx'
+	password = 'public'
+	
+	#Being a publisher
+	client_id_publisher = f'mqtt-publisher' + name
+	publisher_client = mqtt.Client(client_id_publisher)
+	publisher_client.username_pw_set(username, password)
+	publisher_client.on__connect = on_publisher_connect
+	publisher_client.connect(broker, port)
+	publisher_client.loop_start()
+	
+	msg = "nearest_bin_{}".format(name)
+	msg = msg.encode()
+	result = publisher_client.publish(topic, msg)
+	status = result[0]
+			
+	if status == 0:
+			
+		print('Send {} to topic {}'.format(msg, topic))
+				
+	else:
+			
+		print('Failed to send message to topic {}'.format(topic))
+		
 def saveToDB2():
     #place holder
     #print("Placeholder for db data.")
