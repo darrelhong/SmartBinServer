@@ -35,7 +35,24 @@ def bin_page(name):
         [name],
         True,
     )
-    return render_template("/bin/index.html", data=data, bin_name=name)
+
+    fill_history_2days = query_db(
+        "SELECT * FROM fill_level WHERE "
+        "bin_name = ? "
+        "AND time_updated > datetime('now', '-2 days') "
+        "ORDER BY time_updated DESC",
+        [name],
+    )
+
+    exceed_70 = []
+
+    for i, row in enumerate(fill_history_2days, start=1):
+        if row["fill_percent"] >= 70 and fill_history_2days[i - 2]["fill_percent"] < 70:
+            exceed_70.append(dict(row))
+
+    return render_template(
+        "/bin/index.html", data=data, bin_name=name, exceed_70=exceed_70
+    )
 
 
 @views.route("/floorplan")

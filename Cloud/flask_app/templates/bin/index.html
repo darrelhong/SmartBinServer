@@ -62,9 +62,28 @@
 </div>
 
 <div class="row mt-4 justify-content-center">
-  <h5 class="text-center mb-0">Fill chart</h5>
   <div class="col col-auto">
+    <h5 class="text-center mb-0">Fill chart</h5>
     <img src="{{url_for('views.fill_chart', name=bin_name)}}" alt="fill level chart" width="640" />
+  </div>
+  <div class="col">
+    <h5 class="text-center mb-0">Peak periods</h5>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td scope="col">Fill %</td>
+          <td scope="col">Time</td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in exceed_70 %}
+          <tr>
+            <td>{{row["fill_percent"]}}</td>
+            <td>{{row["time_updated"].strftime("%A, %d %b %Y, %I:%M:%S %p")}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 </div>
 
