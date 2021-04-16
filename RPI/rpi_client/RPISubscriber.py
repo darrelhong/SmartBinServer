@@ -1,10 +1,10 @@
 import paho.mqtt.client as mqtt
 import sqlite3
 import config
+import os
 
 deviceName = config.BIN_NAME
 
-			
 def on_client_connect(client, userdata, flags, rc):
 	if rc == 0:
 		print("Connected to MQTT Broker to listen for nearest bin")
@@ -16,8 +16,8 @@ def on_message(client, userdata, msg):
 	print("Message received: " + message)
 	# parse incomming messages
 	
-	if (message.startsWith("NEAREST_BIN_" + deviceName)) :
-        print("Nearest Bin received!")
+	if (message.startsWith("NEAREST_BIN_" + deviceName)):
+		print("Nearest Bin received!")
         
         data = message.split("_")
         nearestBin = data[3]
@@ -32,27 +32,26 @@ def on_message(client, userdata, msg):
 try:
     
     #Set up DB Connection
-    conn = sqlite3.connect('hub_sensor.db')
+    conn = sqlite3.connect(os.path.realpath('../instance/flaskr.sqlite'))
     
 	#Mqtt variables
-	broker = 'broker.emqx.io'
-	port = 1883
-	topic = "/IS4151/SmartBin/RPIBroker"
-	username = 'emqx'
-	password = 'public'
+    broker = 'broker.emqx.io'
+    port = 1883
+    topic = "/IS4151/SmartBin/RPIBroker"
+    username = 'emqx'
+    password = 'public'
 	
-
 	#Set Connecting Client ID
-	client_id_listener = f'mqtt-listener' + name
-	print('client_id={}'.format(client_id_listener))
-	client = mqtt.Client(client_id_listener)
-	client.username_pw_set(username, password)
-	client.on_connect = on_client_connect
-	client.connect(broker, port)
-	client.subscribe(topic)
-	client.on_message = on_message
+    client_id_listener = f'mqtt-listener' + deviceName
+    print('client_id={}'.format(client_id_listener))
+    client = mqtt.Client(client_id_listener)
+    client.username_pw_set(username, password)
+    client.on_connect = on_client_connect
+    client.connect(broker, port)
+    client.subscribe(topic)
+    client.on_message = on_message
 
-	client.loop_forever()
+    client.loop_forever()
 	
 
 except KeyboardInterrupt:

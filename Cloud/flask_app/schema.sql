@@ -7,7 +7,11 @@ CREATE TABLE bin (
   is_spill INTEGER CHECK(is_spill = 0 OR is_spill = 1),
   is_spill_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
   is_tilt INTEGER CHECK(is_tilt = 0 OR is_tilt = 1),
-  is_tilt_updated TIMESTAMP DEFAULT (datetime('now','localtime'))
+  is_tilt_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
+  xCordinate INTEGER,
+  yCordinate INTEGER,
+  nearestBin TEXT,
+  nearestBin_distance INTEGER
 );
 
 --implicit rowid
@@ -37,13 +41,13 @@ END;
 -- END;
 
 -- Initialise mock data
-INSERT INTO bin (bin_name, is_spill, is_tilt) 
+INSERT INTO bin (bin_name, is_spill, is_tilt, xCordinate, yCordinate) 
 VALUES
-  ('ALPHA', true, false), 
-  ('BRAVO', false, true),
-  ('CHARLIE', false, false),
-  ('DELTA', false, false),
-  ('ECHO', false, false)
+  ('ALPHA', true, false, 4, 20), 
+  ('BRAVO', false, true, 15, 22),
+  ('CHARLIE', false, false, 28, 18),
+  ('DELTA', false, false, 6, 2),
+  ('ECHO', false, false, 11, 4)
 ;
 
 INSERT INTO fill_level (bin_name, fill_percent, time_updated) 
