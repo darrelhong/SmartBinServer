@@ -63,7 +63,7 @@ def checkNearestBin():
 	publisher_client.connect(broker, port)
 	publisher_client.loop_start()
 	
-	msg = "nearest_bin_{}".format(deviceName)
+	msg = "NEAREST_BIN_{}".format(deviceName)
 	msg = msg.encode()
 	result = publisher_client.publish(topic, msg)
 	status = result[0]

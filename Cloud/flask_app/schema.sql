@@ -8,8 +8,8 @@ CREATE TABLE bin (
   is_spill_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
   is_tilt INTEGER CHECK(is_tilt = 0 OR is_tilt = 1),
   is_tilt_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
-  xCordinate INTEGER,
-  yCordinate INTEGER,
+  xCoordinate, INTEGER,
+  yCoordinate INTEGER,
   nearestBin TEXT,
   nearestBin_distance INTEGER
 );
