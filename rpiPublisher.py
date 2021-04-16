@@ -31,10 +31,28 @@ def run():
 		client.connect(broker, port)
 		client.loop_start()
 		
-		msg = "NEAREST_BIN_{}".format(name)
+		"""
+		msg = "{}_{}_{}_{}_{}".format(name, 0, '2021-04-16', 0, '2021-04-16')
 		encodedResponse = msg.encode()
 		
-		#relay, find nearest bin
+		#relay spill tilt
+		time.sleep(1) #need this sleep if not there's no time for it to connect to the broker
+		result = client.publish(cloudTopic, encodedResponse)
+		status = result[0]
+					
+		if status == 0:
+				
+			print('Send {} to topic {}'.format(msg, cloudTopic))
+					
+		else:
+				
+			print('Failed to send message to topic {}'.format(cloudTopic))"""
+			
+			
+		msg = "{}_{}_{}".format(name, 100, '2021-04-16')
+		encodedResponse = msg.encode()
+		
+		#relay fill
 		time.sleep(1) #need this sleep if not there's no time for it to connect to the broker
 		result = client.publish(cloudTopic, encodedResponse)
 		status = result[0]

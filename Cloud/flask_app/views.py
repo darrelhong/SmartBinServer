@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, Response
+from datetime import date
+from flask import Blueprint, render_template, Response, request
+from jinja2.utils import consume
 
 from flask_app.db import query_db
 
@@ -25,6 +27,7 @@ def index():
 
 @views.route("/bin/<name>")
 def bin_page(name):
+    date_range = request.args.get("date_range") or "2"
 
     data = query_db(
         "SELECT *, "
@@ -47,7 +50,6 @@ def bin_page(name):
     exceed_70 = []
 
     for i in range(1, len(fill_history_2days)):
-        print(dict(fill_history_2days[i]))
         if (
             fill_history_2days[i]["fill_percent"] >= 70
             and fill_history_2days[i - 1]["fill_percent"] < 70
@@ -55,7 +57,11 @@ def bin_page(name):
             exceed_70.append(dict(fill_history_2days[i]))
 
     return render_template(
-        "/bin/index.html", data=data, bin_name=name, exceed_70=exceed_70
+        "/bin/index.html",
+        data=data,
+        bin_name=name,
+        exceed_70=exceed_70,
+        date_range=date_range,
     )
 
 
@@ -71,12 +77,15 @@ def floorplan():
     return render_template("/floorplan.html", data=data)
 
 
-@views.route("/fill-chart/<name>")
-def fill_chart(name):
-    data = query_db(
-        "SELECT bin_name, time_updated, fill_percent FROM bin NATURAL JOIN fill_level WHERE bin_name = ?",
-        [name],
-    )
+@views.route("/fill-chart/<name>/<date_range>")
+def fill_chart(name, date_range):
+    query = "SELECT bin_name, time_updated, fill_percent FROM bin NATURAL JOIN fill_level WHERE bin_name = ?"
+
+    if date_range == "2":
+        query += " AND time_updated > datetime('now', '-2 days')"
+
+    data = query_db(query, [name])
+
     x = [row["time_updated"] for row in data]
     y = [row["fill_percent"] for row in data]
 
