@@ -41,33 +41,29 @@ def waitResponse():
 	
 	return response
 
-def on_connect(client, userdata, flags, rc):
-	
+def on_publisher_connect(client, userdata, flags, rc):
 	if rc == 0:
-	
-		print("Connected to MQTT Broker!")
-		
+		print("Connected to MQTT Broker as publisher!")
 	else:
-	
-		print('Failed to connect, return code {:d}'.format(rc))
+		print('Failed to connect, return code {:d}'.format(rc))	
 
 def checkNearestBin():
     
 	broker = 'broker.emqx.io'
 	port = 1883
-	topic = "/IS4151/SmartBin/Broker"
+	topic = "/IS4151/SmartBin/CloudBroker"
 	username = 'emqx'
 	password = 'public'
 	
 	#Being a publisher
-	client_id_publisher = f'mqtt-publisher' + name
+	client_id_publisher = f'mqtt-publisher' + deviceName
 	publisher_client = mqtt.Client(client_id_publisher)
 	publisher_client.username_pw_set(username, password)
 	publisher_client.on__connect = on_publisher_connect
 	publisher_client.connect(broker, port)
 	publisher_client.loop_start()
 	
-	msg = "nearest_bin_{}".format(name)
+	msg = "nearest_bin_{}".format(deviceName)
 	msg = msg.encode()
 	result = publisher_client.publish(topic, msg)
 	status = result[0]
@@ -97,6 +93,9 @@ def saveToDB2():
                 percentage = round(((((ULTRASONIC_FRONT_EMPTY - fillFront) + (ULTRASONIC_BACK_EMPTY - fillBack))/FILL_TRESHOLD) * 100),2)
                 sql = "INSERT INTO fill_level(fill_percent, bin_name) VALUES(" + str(percentage) + ",'ALPHA');"
                 #print("fill.")
+
+                if ( percentage > 70 ) :
+                    checkNearestBin()
                 
                 
             elif (sensorName == "TILT"):

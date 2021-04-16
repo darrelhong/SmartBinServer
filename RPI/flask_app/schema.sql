@@ -10,7 +10,8 @@ CREATE TABLE bin (
   is_tilt_updated TIMESTAMP DEFAULT (datetime('now','localtime')),
   xCordinate INTEGER DEFAULT 15,
   yCordinate INTEGER DEFAULT 7,
-  nearestBin TEXT
+  nearestBin TEXT,
+  nearestBin_distance INTEGER
 );
 
 --implicit rowid
