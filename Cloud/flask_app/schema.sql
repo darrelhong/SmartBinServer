@@ -19,6 +19,7 @@ CREATE TABLE fill_level (
   fill_percent INTEGER NOT NULL CHECK(fill_percent >= 0 AND fill_percent <= 100),
   time_updated TIMESTAMP DEFAULT (datetime('now','localtime')) NOT NULL,
   bin_name TEXT NOT NULL, 
+  tocloud BOOLEAN,
   FOREIGN KEY(bin_name) REFERENCES bin(bin_name)
 );
 
@@ -41,13 +42,13 @@ END;
 -- END;
 
 -- Initialise mock data
-INSERT INTO bin (bin_name, is_spill, is_tilt, xCordinate, yCordinate) 
+INSERT INTO bin (bin_name, is_spill, is_tilt, xCoordinate, yCoordinate, nearestBIN_distance) 
 VALUES
-  ('ALPHA', true, false, 4, 20), 
-  ('BRAVO', false, true, 15, 22),
-  ('CHARLIE', false, false, 28, 18),
-  ('DELTA', false, false, 6, 2),
-  ('ECHO', false, false, 11, 4)
+  ('ALPHA', true, false, 4, 20, 11), 
+  ('BRAVO', false, true, 15, 22, 29),
+  ('CHARLIE', false, false, 28, 18, 14),
+  ('DELTA', false, false, 6, 2, 22),
+  ('ECHO', false, false, 11, 4, 39)
 ;
 
 INSERT INTO fill_level (bin_name, fill_percent, time_updated) 
