@@ -16,9 +16,9 @@ def on_client_connect(client, userdata, flags, rc):
 		print('Failed to connect, return code {:d}'.format(rc))
 		
 
-def send_message(msg, client):
+def send_message(msg):
 	encodedResponse = msg.encode()
-	result = client.publish(rpiTopic, encodedResponse)
+	result = publisher_client.publish(rpiTopic, encodedResponse)
 	status = result[0]
 				
 	if status == 0:
@@ -37,40 +37,32 @@ def on_message(client, userdata, msg):
 
 	#NEAREST_BIN_binName
 	if (message[0] == "NEAREST"):
-		print("bin {} wants to know its nearest bin".format(message[1]))
+		print("bin {} wants to know its nearest bin".format(message[2]))
+		message = "NEAREST_BIN_{}_{}_{}".format(message[2], "BRAVO", 100)
+		send_message(message,)
 	else:
-		print("Relay messages up")
+		print("bin {} relaying messages up".format(message[0]))
+		#store in db
 	
 	
 	
 	
 	#NEAREST_BIN_binName_nearestBinName_distance
-	response = "nearest_bin_ALPHA_BRAVO_100_20"
-	
 	
 	#relay binName_isSpill_isSpillUpdated_isTilte_isTileUpdated;
 	#relay binName_fillPercent_timeUpdated_;
-	
-	#do some processing
-	msg = ""
-	
-	send_message(msg, rpiTopic)
 		
-			
-
-
-
 try:
 	
 	#Mqtt variables
 	broker = 'broker.emqx.io'
 	port = 1883
-	cloudTopic = "/IS4151/SmartBin/CloudBroker"
+	cloudTopic = "/IS4151/SmartBin/Broker"
 	rpiTopic = "/IS4151/SmartBin/RPIBroker"
 	username = 'emqx'
 	password = 'public'
 	
-	"""
+	
 	#Being a publisher
 	client_id_publisher = f'mqtt-publisher' + name
 	print('client_id={}'.format(client_id_publisher))
@@ -78,7 +70,7 @@ try:
 	publisher_client.username_pw_set(username, password)
 	publisher_client.on_connect = on_publisher_connect
 	publisher_client.connect(broker, port)
-	publisher_client.loop_start()"""
+	publisher_client.loop_start()
 
 	#Set Connecting Client ID
 	client_id_listener = f'mqtt-listener' + name
