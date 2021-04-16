@@ -42,9 +42,9 @@ END;
 -- END;
 
 -- Initialise mock data
-INSERT INTO bin (bin_name, is_spill, is_tilt) 
+INSERT INTO bin (bin_name, is_spill, is_tilt, nearestBin, nearestBin_distance) 
 VALUES
-  ('ALPHA', false, false)
+  ('ALPHA', false, false, 'CHARLIE', 14)
 ;
 
 INSERT INTO fill_level (bin_name, fill_percent, time_updated) 

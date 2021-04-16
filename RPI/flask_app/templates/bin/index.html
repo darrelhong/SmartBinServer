@@ -58,6 +58,14 @@
       <dd class="col-sm-8">
         <p>{{data['is_tilt_updated'].strftime("%A, %d %b %Y, %I:%M:%S %p")}}</p>
       </dd>
+
+      {% if data['fill_percent'] > 70 %}
+      <dt class="col-sm-4">Nearest Bin</dt>
+      <dd class="col-sm-8">
+        <p style="color:red"> Bin is reaching max capacity. Please proceed to the next available bin at: {{data['nearestBin']}}, {{data['nearestBin_distance']}} metre away (Pantry)!</p>
+      </dd>
+      {% endif %}
+
     </dl>
   </div>
 </div>

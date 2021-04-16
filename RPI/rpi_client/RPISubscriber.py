@@ -16,43 +16,43 @@ def on_message(client, userdata, msg):
 	print("Message received: " + message)
 	# parse incomming messages
 	
-	if (message.startsWith("NEAREST_BIN_" + deviceName)):
+	if (message.startswith("NEAREST_BIN_" + deviceName)):
 		print("Nearest Bin received!")
-        
-        data = message.split("_")
-        nearestBin = data[3]
-        nearestBinDistance = data[4]
-        c1 = conn.cursor()
-        sql = 'UPDATE bin SET nearestBin = "' + nearestBin + '" , nearestBin_distance = ' + nearestBinDistance + ' WHERE bin = "' + deviceName + '"'
-        
-        c1.execute(sql)
-        conn.commit()
-	
+
+		data = message.split("_")
+		if (data[2] == deviceName):
+			nearestBin = data[3]
+			nearestBinDistance = data[4]
+			c1 = conn.cursor()
+			sql = 'UPDATE bin SET nearestBin = "' + nearestBin + '" , nearestBin_distance = ' + nearestBin_distance + ' WHERE bin = "' + deviceName + '"'
+
+			c1.execute(sql)
+			conn.commit()
 
 try:
-    
-    #Set up DB Connection
-    conn = sqlite3.connect(os.path.realpath('../instance/flaskr.sqlite'))
-    
-	#Mqtt variables
-    broker = 'broker.emqx.io'
-    port = 1883
-    topic = "/IS4151/SmartBin/RPIBroker"
-    username = 'emqx'
-    password = 'public'
-	
-	#Set Connecting Client ID
-    client_id_listener = f'mqtt-listener' + deviceName
-    print('client_id={}'.format(client_id_listener))
-    client = mqtt.Client(client_id_listener)
-    client.username_pw_set(username, password)
-    client.on_connect = on_client_connect
-    client.connect(broker, port)
-    client.subscribe(topic)
-    client.on_message = on_message
 
-    client.loop_forever()
-	
+	#Set up DB Connection
+	conn = sqlite3.connect(os.path.realpath('../instance/flaskr.sqlite'))
+
+	#Mqtt variables
+	broker = 'broker.emqx.io'
+	port = 1883
+	topic = "/IS4151/SmartBin/RPIBroker"
+	username = 'emqx'
+	password = 'public'
+
+	#Set Connecting Client ID
+	client_id_listener = f'mqtt-listener' + deviceName
+	print('client_id={}'.format(client_id_listener))
+	client = mqtt.Client(client_id_listener)
+	client.username_pw_set(username, password)
+	client.on_connect = on_client_connect
+	client.connect(broker, port)
+	client.subscribe(topic)
+	client.on_message = on_message
+
+	client.loop_forever()
+
 
 except KeyboardInterrupt:
 	print("Program terminated!")
