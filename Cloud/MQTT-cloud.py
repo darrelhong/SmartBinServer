@@ -32,23 +32,23 @@ def send_message(msg, client):
 		print('Failed to send message to topic {}'.format(rpiTopic))
 
 def on_message(client, userdata, msg):
-	print("Received something")
+	#print("Received something")
 	message = msg.payload.decode()
 	print("Message received: " + message)
 	message = message.split("_")
 
 	#NEAREST_BIN_binName
 	if (message[0] == "NEAREST"):
-		sourceBin = message[1]
-		print("bin {} wants to know its nearest bin".format(message[1]))
-		nearest_bin = getNearestBinAvailable()
+		sourceBin = message[2]
+		print("bin {} wants to know its nearest bin".format(message[2]))
+		nearest_bin = getNearestBinAvailable(sourceBin)
 		nearest_bin = nearest_bin.split(',')
 		msg = "NEAREST_BIN_" + sourceBin + "_" + nearest_bin[0] + "_" + nearest_bin[1]
 		print("Relaying nearest available bin: " + nearest_bin[0])
 		send_message(msg, client)
 
 	else:
-		print("*** bin {} relaying messages up ***".format(message[0]))
+		#print("*** bin {} relaying messages up ***".format(message[0]))
 		#store in db
 		
 		if (len(message) == 5):
@@ -59,7 +59,7 @@ def on_message(client, userdata, msg):
 			is_tilt = message[3]
 			is_tilt_updated = [4]
 			
-			print("Storing values into TABLE bin")
+			#print("Storing values into TABLE bin")
 			cur = conn.cursor()
 			updateQuery = "UPDATE bin set is_spill = {}, is_tilt = {} WHERE bin_name = '{}'".format(is_spill, is_tilt, binName)
 			cur.execute(updateQuery)
@@ -80,10 +80,10 @@ def on_message(client, userdata, msg):
 
 def getNearestBinAvailable(queryBin):
 	c1 = conn.cursor()
-	c1.execute("SELECT * FROM (SELECT *, max(time_updated) AS time_updated FROM fill_level NATURAL JOIN bin GROUP BY bin_name) WHERE fill_percent < 80 AND bin_name IS NOT ? ORDER BY nearestBIN_distance asc LIMIT 1", ["ALPHA"])
+	c1.execute("SELECT * FROM (SELECT *, max(time_updated) AS time_updated FROM fill_level NATURAL JOIN bin GROUP BY bin_name) WHERE fill_percent < 80 AND bin_name IS NOT ? ORDER BY nearestBIN_distance asc LIMIT 1", [queryBin])
 	data = c1.fetchone()
 	targetBin = str(data[2])
-	targetDistance = str(data[9])
+	targetDistance = str(data[12])
 	return "" + targetBin + "," + targetDistance
 
 def getNearestBin(queryBin):
