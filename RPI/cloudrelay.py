@@ -27,7 +27,7 @@ try :
 	password = 'public'
 	
 	#Being a publisher
-	client_id_publisher = 'mqtt-publisher-' + name
+	client_id_publisher = 'mqtt-publisher--' + name
 	client = mqtt.Client(client_id_publisher)
 	print('client_id={}'.format(client_id_publisher))
 	client.username_pw_set(username, password)
@@ -36,7 +36,7 @@ try :
 	client.loop_start()
 
 	while True:
-		time.sleep(10)
+		time.sleep(1)
 
 		print("Sending sensor data up to cloud now")
 		c1 = conn.cursor()
@@ -63,10 +63,21 @@ try :
 				conn.commit()
 			else:
 				print('Failed to send message to topic (To cloud data) {}'.format(cloudTopic))
-
-			
-			
+		
 		conn.commit()
+		c1 = conn.cursor()
+		retrieveBinQuery = "SELECT bin_name, is_spill, is_spill_updated, is_tilt, is_tilt_updated from bin"
+		c1.execute(retrieveBinQuery)
+		results = c1.fetchall()
+		result = results[0]
+		bin_name = result[0]
+		is_spill = result[1]
+		is_spill_updated = result[2]
+		is_tilt = result[3]
+		is_tilt_updated = result[4]
+		message = bin_name + "_" + str(is_spill) + "_" + is_spill_updated + "_" + str(is_tilt) + "_" + is_tilt_updated
+		message = message.encode()
+		client.publish(cloudTopic, message)
 
 except KeyboardInterrupt:
 	
