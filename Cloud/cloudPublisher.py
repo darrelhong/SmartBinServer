@@ -70,7 +70,8 @@ def on_message(client, userdata, msg):
 			
 			print("Storing values into TABLE fill_level")
 			cur = conn.cursor()
-			insertQuery = "INSERT into fill_level (fill_percent, time_updated, bin_name) VALUES ({}, {}, '{}')".format(fill_percent, time_updated, binName)
+			insertQuery = "INSERT into fill_level (fill_percent, bin_name) VALUES ({}, '{}')".format(fill_percent, binName)
+			#insertQuery = "INSERT into fill_level (fill_percent, time_updated, bin_name) VALUES ({}, {}, '{}')".format(fill_percent, time_updated, binName)
 			cur.execute(insertQuery)
 			conn.commit()
 	
@@ -86,7 +87,7 @@ try:
 	#Mqtt variables
 	broker = 'broker.emqx.io'
 	port = 1883
-	cloudTopic = "/IS4151/SmartBin/Broker"
+	cloudTopic = "/IS4151/SmartBin/CloudBroker"
 	rpiTopic = "/IS4151/SmartBin/RPIBroker"
 	username = 'emqx'
 	password = 'public'
