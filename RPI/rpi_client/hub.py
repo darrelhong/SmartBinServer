@@ -164,8 +164,8 @@ try:
     #message = "INIT_RPI_SENSOR"
 
     #RPI.. either ACM0 or ACM01
-    print("Listening on /dev/ttyACM1... Press CTRL+C to exit")	
-    ser = serial.Serial(port='/dev/ttyACM1', baudrate=115200, timeout=1)
+    print("Listening on /dev/ttyACM0... Press CTRL+C to exit")	
+    ser = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=1)
     print("Device Name: " + deviceName)
     
     #Win10
