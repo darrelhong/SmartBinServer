@@ -40,15 +40,19 @@ def bin_page(name):
         "SELECT * FROM fill_level WHERE "
         "bin_name = ? "
         "AND time_updated > datetime('now', '-2 days') "
-        "ORDER BY time_updated DESC",
+        "ORDER BY time_updated ASC",
         [name],
     )
 
     exceed_70 = []
 
-    for i, row in enumerate(fill_history_2days, start=1):
-        if row["fill_percent"] >= 70 and fill_history_2days[i - 2]["fill_percent"] < 70:
-            exceed_70.append(dict(row))
+    for i in range(1, len(fill_history_2days)):
+        print(dict(fill_history_2days[i]))
+        if (
+            fill_history_2days[i]["fill_percent"] >= 70
+            and fill_history_2days[i - 1]["fill_percent"] < 70
+        ):
+            exceed_70.append(dict(fill_history_2days[i]))
 
     return render_template(
         "/bin/index.html", data=data, bin_name=name, exceed_70=exceed_70
