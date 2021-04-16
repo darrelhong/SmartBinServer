@@ -16,15 +16,23 @@
 
 .fill-green {
   background: $success;
+  fill: $success;
 }
 .fill-blue {
   background: $info;
+  fill: $info;
 }
 .fill-yellow {
   background: $warning;
+  fill: $warning;
+}
+.fill-orange {
+  background: $orange;
+  fill: $orange;
 }
 .fill-red {
   background: $danger;
+  fill: $danger;
 }
 
 .bin-wrapper:hover .bin-arrow {

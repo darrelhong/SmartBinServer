@@ -10,12 +10,10 @@ white_led = PWMLED(24)  # Status light and retake photo
 
 camera = PiCamera()
 
-
 class WasteClassifier:
     def __init__(self, modelPath) -> None:
         pass
         self.model = ImageModel.load(modelPath)
-
     def led_select(label):
         print(label)
         if label == "general":
@@ -34,7 +32,6 @@ class WasteClassifier:
             blue_led.off()
             green_led.off()
             white_led.off()
-
     def classify(self) -> None:
         # take picture
         # Quickly blink status light

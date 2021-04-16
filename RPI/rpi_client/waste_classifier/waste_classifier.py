@@ -10,7 +10,6 @@ white_led = PWMLED(24)  # Status light and retake photo
 
 camera = PiCamera()
 
-
 class WasteClassifier:
     def __init__(self, modelPath) -> None:
         pass
