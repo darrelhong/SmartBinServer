@@ -40,8 +40,7 @@ def on_message(client, userdata, msg):
 	#NEAREST_BIN_binName
 	if (message[0] == "NEAREST"):
 		print("bin {} wants to know its nearest bin".format(message[2]))
-		message = "NEAREST_BIN_{}_{}_{}".format(message[2], "BRAVO", 100)
-		send_message(message,)
+		
 	else:
 		print("*** bin {} relaying messages up ***".format(message[0]))
 		#store in db
@@ -71,16 +70,10 @@ def on_message(client, userdata, msg):
 			print("Storing values into TABLE fill_level")
 			cur = conn.cursor()
 			insertQuery = "INSERT into fill_level (fill_percent, bin_name) VALUES ({}, '{}')".format(fill_percent, binName)
-			#insertQuery = "INSERT into fill_level (fill_percent, time_updated, bin_name) VALUES ({}, {}, '{}')".format(fill_percent, time_updated, binName)
 			cur.execute(insertQuery)
 			conn.commit()
 	
 	
-	#NEAREST_BIN_binName_nearestBinName_distance
-	
-	#relay binName_isSpill_isSpillUpdated_isTilt_isTiltUpdated;
-	#relay binName_fillPercent_timeUpdated_;
-		
 try:
 	conn = sqlite3.connect('./instance/flaskr.sqlite')
 	
