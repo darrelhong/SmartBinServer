@@ -19,7 +19,7 @@ import config
 
 deviceName = config.BIN_NAME
 cameraOn = False
-ULTRASONIC_FRONT_EMPTY = 39
+ULTRASONIC_FRONT_EMPTY = 40
 ULTRASONIC_FRONT_FULL = 21
 
 ULTRASONIC_BACK_EMPTY = 25
@@ -90,7 +90,18 @@ def saveToDB2():
                 fillFront = int(data[2])
                 fillBack = int(data[3])
                 
+                print("Front value is -> " + str(fillFront))
+                print("back value is -> " + str(fillBack))
+                
                 percentage = round(((((ULTRASONIC_FRONT_EMPTY - fillFront) + (ULTRASONIC_BACK_EMPTY - fillBack))/FILL_TRESHOLD) * 100),2)
+                
+                # To handle for Ultrasonic sensor sending random outliers that is out of range of limit.
+                if ( percentage < 0 ) :
+                    percentage = 0
+                elif ( percentage > 100 ):
+                    percentage = 100
+                
+                print("Percentage is ... " + str(percentage))
                 sql = "INSERT INTO fill_level(fill_percent, bin_name) VALUES(" + str(percentage) + ",'ALPHA');"
                 #print("fill.")
 
