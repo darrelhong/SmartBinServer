@@ -1,6 +1,9 @@
 import paho.mqtt.client as mqtt
+import sqlite3
+import config
 
-name = "ALPHA"
+deviceName = config.BIN_NAME
+
 			
 def on_client_connect(client, userdata, flags, rc):
 	if rc == 0:
@@ -11,11 +14,26 @@ def on_client_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
 	message = msg.payload.decode()
 	print("Message received: " + message)
-	
 	# parse incomming messages
-
+	
+	if (message.startsWith("NEAREST_BIN_" + deviceName)) :
+        print("Nearest Bin received!")
+        
+        data = message.split("_")
+        nearestBin = data[3]
+        nearestBinDistance = data[4]
+        c1 = conn.cursor()
+        sql = 'UPDATE bin SET nearestBin = "' + nearestBin + '" , nearestBin_distance = ' + nearestBinDistance + ' WHERE bin = "' + deviceName + '"'
+        
+        c1.execute(sql)
+        conn.commit()
+	
 
 try:
+    
+    #Set up DB Connection
+    conn = sqlite3.connect('hub_sensor.db')
+    
 	#Mqtt variables
 	broker = 'broker.emqx.io'
 	port = 1883
