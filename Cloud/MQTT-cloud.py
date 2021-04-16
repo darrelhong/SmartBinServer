@@ -44,7 +44,7 @@ def on_message(client, userdata, msg):
 		nearest_bin = nearest_bin.split(',')
 		msg = "NEAREST_BIN_" + sourceBin + "_" + nearest_bin[0] + "_" + nearest_bin[1]
 		print("Relaying nearest available bin: " + nearest_bin[0])
-		client.publish(rpiTopic, msg)
+		send_message(msg, client)
 	else:
 		print("Relay messages up")
 
@@ -65,24 +65,6 @@ def getNearestBin(queryBin):
 	targetBin = str(data[0])
 	targetDistance = str(data[1])
 	return "" + targetBin + "," + targetDistance
-
-
-
-	#NEAREST_BIN_binName_nearestBinName_distance
-	
-	
-	
-	#relay binName_isSpill_isSpillUpdated_isTilte_isTileUpdated;
-	#relay binName_fillPercent_timeUpdated_;
-	
-	#do some processing
-	msg = ""
-	
-	send_message(msg, rpiTopic)
-		
-			
-
-
 
 try:
 	conn = sqlite3.connect("./instance/flaskr.sqlite")
