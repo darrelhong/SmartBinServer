@@ -45,7 +45,7 @@ def on_message(client, userdata, msg):
 		nearest_bin = nearest_bin.split(',')
 		msg = "NEAREST_BIN_" + sourceBin + "_" + nearest_bin[0] + "_" + nearest_bin[1]
 		print("Relaying nearest available bin: " + nearest_bin[0])
-		send_message(msg, client)
+		send_message(msg, publisher_client)
 
 	else:
 		#print("*** bin {} relaying messages up ***".format(message[0]))
