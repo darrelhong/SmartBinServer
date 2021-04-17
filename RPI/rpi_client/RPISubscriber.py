@@ -22,9 +22,9 @@ def on_message(client, userdata, msg):
 		data = message.split("_")
 		if (data[2] == deviceName):
 			nearestBin = data[3]
-			nearestBinDistance = data[4]
+			nearestBin_distance = data[4]
 			c1 = conn.cursor()
-			sql = 'UPDATE bin SET nearestBin = "' + nearestBin + '" , nearestBin_distance = ' + nearestBin_distance + ' WHERE bin = "' + deviceName + '"'
+			sql = 'UPDATE bin SET nearestBin = "' + nearestBin + '" , nearestBin_distance = ' + nearestBin_distance + ' WHERE bin_name = "' + deviceName + '"'
 
 			c1.execute(sql)
 			conn.commit()

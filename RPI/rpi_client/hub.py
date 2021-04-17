@@ -61,6 +61,7 @@ def checkNearestBin():
 	publisher_client.username_pw_set(username, password)
 	publisher_client.on__connect = on_publisher_connect
 	publisher_client.connect(broker, port)
+	time.sleep(1)
 	publisher_client.loop_start()
 	
 	msg = "NEAREST_BIN_{}".format(deviceName)
@@ -75,6 +76,9 @@ def checkNearestBin():
 	else:
 			
 		print('Failed to send message to topic {}'.format(topic))
+	
+	publisher_client.disconnect()
+	publisher_client.loop_stop()
 		
 def saveToDB2():
     #place holder
@@ -175,8 +179,8 @@ try:
     #message = "INIT_RPI_SENSOR"
 
     #RPI.. either ACM0 or ACM01
-    print("Listening on /dev/ttyACM0... Press CTRL+C to exit")	
-    ser = serial.Serial(port='/dev/ttyACM0', baudrate=115200, timeout=1)
+    print("Listening on /dev/ttyACM1... Press CTRL+C to exit")	
+    ser = serial.Serial(port='/dev/ttyACM1', baudrate=115200, timeout=1)
     print("Device Name: " + deviceName)
     
     #Win10
