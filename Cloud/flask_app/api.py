@@ -61,7 +61,7 @@ def update_bin():
             fill_percent = int(data["distance"] / BIN_HEIGHT * 100)
             cur = get_db().cursor()
             cur.execute(
-                "INSERT INTO fill_level VALUES " "(?, datetime('now', 'localtime'), ?)",
+                "INSERT INTO fill_level (fill_percent, time_updated, bin_name) VALUES " "(?, datetime('now', 'localtime'), ?)",
                 [fill_percent, name],
             )
             get_db().commit()
