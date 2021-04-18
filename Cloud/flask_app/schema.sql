@@ -42,7 +42,7 @@ END;
 -- END;
 
 -- Initialise mock data
-INSERT INTO bin (bin_name, is_spill, is_tilt, xCoordinate, yCoordinate, nearestBIN_distance) 
+INSERT INTO bin (bin_name, is_spill, is_tilt, xCordinate, yCordinate, nearestBIN_distance) 
 VALUES
   ('ALPHA', true, false, 4, 20, 11), 
   ('BRAVO', false, true, 15, 22, 29),
