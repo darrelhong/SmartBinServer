@@ -1,7 +1,16 @@
+## Screenshots
+
+### Overview
+
+![overview](screenshots/overview.png)
+
+### Details
+
+![details](screenshots/details.png)
+
 ## Structure
 
 Repo to store all functionality related to web platform, including flask server, and serial communication between microbit and RPi
-
 
 ### flask_app
 
@@ -23,7 +32,6 @@ Bootstrap CSS library added with some custom overrides. Compiled from scss sourc
 
 `localhost:5000/` mockup for bin fill level
 
-
 ## Setup
 
 Install Python 3
@@ -37,11 +45,13 @@ source venv/bin/activate
 ```
 
 Install required packages
+
 ```
 pip3 install -r requirements.txt
 ```
 
 **Run flask app**
+
 ```
 # windows
 set FLASK_ENV=development
