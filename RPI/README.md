@@ -19,7 +19,7 @@
 
 Setup above equipment according to pin layout in `rpi_waste_classifier.py`
 
-Download model from https://nusu-my.sharepoint.com/:u:/r/personal/e0311162_u_nus_edu/Documents/classification%20model/trash-dataset-v3%20TFLite.zip?csf=1&web=1
+Download model from http://comp.nus.edu.sg/~glenntan/IS4151-Model/model.zip
 
 Unzip and rename folder to `model` and place in the same directory as `rpi_waste_classifier.py`
 
@@ -32,20 +32,6 @@ pip3 install lobe
 ```
 
 Run program with python3
-
-Current drawbacks
-
-- Label for `no item` added, works sometimes
-
-### Dataset used
-
-https://github.com/garythung/trashnet
-
-`dataset-resized.zip`
-
-The categories cardboard, glass, metal, paper, plastic was placed under `recyclable` label, while trash was placed under `general trash` label.
-
-There is a much greater set of images that for the `recyclable` label, so by default the model might predict `recyclable` when shown something random.
 
 ## Structure
 
